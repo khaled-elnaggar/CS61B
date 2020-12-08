@@ -79,20 +79,68 @@ public class IntList {
      * *  elements of B.  May modify items of A. Don't use 'new'.
      */
 
+    public static IntList iterDcatenate(IntList A, IntList B) {
+        IntList p = A;
+        while(p.rest != null){
+            p = p.rest;
+        }
+        p.rest = B;
+        return A;
+    }
+/**
+ * Return dcatenate but recursively
+ * */
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        if(A.rest == null){
+            A.rest = B;
+            return null;
+        }
+        dcatenate(A.rest, B);
+        return A;
+    }
+
+        /**
+         * Returns a of consisting of the elements of A followed by the
+         * * elements of B.  May NOT modify items of A.  Use 'new'.
+         */
+    public static IntList iterCatenate(IntList A, IntList B) {
+        IntList res = new IntList(A.first, null);
+        IntList pa = A.rest;
+        IntList pb = B;
+        IntList p = res;
+
+        while(pa != null){
+            p.rest = new IntList(pa.first, null);
+            p = p.rest;
+            pa = pa.rest;
+        }
+
+        while (pb != null){
+            p.rest = new IntList(pb.first, null);
+            p = p.rest;
+            pb = pb.rest;
+        }
+
+        return res;
     }
 
     /**
-     * Returns a of consisting of the elements of A followed by the
-     * * elements of B.  May NOT modify items of A.  Use 'new'.
-     */
-    public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+     * Returns a concatenation without modifying the original lists, recursively*/
+    public static IntList catenate(IntList A, IntList B){
+        IntList res = new IntList(A.first, null);
+        IntList lastNode = recClone(res, A.rest);
+        recClone(lastNode, B);
+        return res;
     }
-
+    //Private little helper method, that modifies and forwards p;
+    private static IntList recClone(IntList p, IntList x){
+        if(x == null){
+            return p;
+        }
+        p.rest = new IntList(x.first, null);
+        p = p.rest;
+        return recClone(p, x.rest);
+    }
 
     /**
      * DO NOT MODIFY ANYTHING BELOW THIS LINE! Many of the concepts below here
