@@ -58,4 +58,17 @@ public class LLDTest {
         assertNull(lld.get(4));
     }
 
+    @Test
+    public void testGetRec(){
+        lld.addFirst("1");
+        lld.addFirst("0");
+        lld.addLast("2");
+        lld.addLast("3");
+
+        assertEquals("0", lld.getRecursive(0));
+        assertEquals("3", lld.getRecursive(3));
+        assertNull(lld.getRecursive(-1));
+        assertNull(lld.getRecursive(4));
+    }
+
 }
