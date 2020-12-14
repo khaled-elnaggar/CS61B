@@ -18,7 +18,7 @@ public class BuggyIntDList extends IntDList {
      *
      * @param l Sorted IntDList to merge
      */
-public void mergeIntDList(IntDList l) {
+    public void mergeIntDList(IntDList l) {
         front = sortedMerge(this.front, l.front);
     }
 
@@ -31,23 +31,21 @@ public void mergeIntDList(IntDList l) {
      */
     private DNode sortedMerge(DNode d1, DNode d2) {
 
-        // (DONE) FIXME: Below code has multiple problems. Debug the code to implement correct functionality.
-
         // ------ WRITE ADDITIONAL CODE HERE AND ONLY HERE (IF NEEDED) ------
-        if(d1 == null){
+        if (d1 == null) {
             return d2;
-        }else if (d2 == null){
+        } else if (d2 == null) {
             return d1;
         }
         // ------------------------------------------------------------------
 
         if (d1.val <= d2.val) {
-            d1.next = sortedMerge(d1.next, d2);   // (DONE) FIXME: Replace this line (if needed). HINT: Step Into(F7) using debugger and try to figure out what it does.
+            d1.next = sortedMerge(d1.next, d2);   // (DONE) FIXME
             d1.next.prev = d1;
             d1.prev = null;
             return d1;
         } else {
-            d2.next = sortedMerge(d1, d2.next);   // (DONE) FIXME: Replace this line (if needed). HINT: Step Into(F7) using debugger and try to figure out what it does.
+            d2.next = sortedMerge(d1, d2.next);   // (DONE) FIXME
             d2.next.prev = d2;
             d2.prev = null;
             return d2;
@@ -60,7 +58,7 @@ public void mergeIntDList(IntDList l) {
      */
     public void reverse() {
 
-        // (DONE) FIXME: Below code has multiple problems. Debug the code to implement correct functionality.
+        // (DONE) FIXME
 
         DNode temp = null;
         DNode p = front;
@@ -70,7 +68,7 @@ public void mergeIntDList(IntDList l) {
             temp = p.prev;
             p.prev = p.next;
             p.next = temp;
-            p = p.prev;        // (DONE) FIXME: Replace this line (if needed). HINT: Use debugger and Java Visualizer to figure out what it does.
+            p = p.prev;        // (DONE) FIXME
         }
 
         // HINT: What does this if block do? Use Debugger and Java Visualizer to figure out.
@@ -78,7 +76,7 @@ public void mergeIntDList(IntDList l) {
             // ------ WRITE ADDITIONAL CODE HERE AND ONLY HERE (IF NEEDED) -----
             back = front;
             // -----------------------------------------------------------------
-            front = temp.prev;    // (DONE) FIXME: Replace this line (if needed). HINT: Use debugger and Java Visualizer to figure out what it does.
+            front = temp.prev;    // (DONE) FIXME
         }
     }
 }
