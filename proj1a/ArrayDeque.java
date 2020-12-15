@@ -143,10 +143,10 @@ public class ArrayDeque<T> {
         if (index < 0 || index >= items.length) {
             return null;
         }
-        if(arrayCase == CASE.ONE){
+        if (arrayCase == CASE.ONE) {
             return items[nextFirst + 1 + index];
         } else {
-            if(nextFirst + 1 + index <= lastEle){
+            if (nextFirst + 1 + index <= lastEle) {
                 return items[nextFirst + 1 + index];
             } else {
                 return items[nextFirst + index - lastEle];
@@ -163,15 +163,15 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        if(arrayCase == CASE.ONE){
-            for(int i = nextFirst + 1; i < nextLast; i++){
+        if (arrayCase == CASE.ONE) {
+            for (int i = nextFirst + 1; i < nextLast; i++) {
                 System.out.print(items[i] + " ");
             }
         } else {
-            for(int i = nextFirst + 1; i < items.length; i++){
+            for (int i = nextFirst + 1; i < items.length; i++) {
                 System.out.print(items[i] + " ");
             }
-            for(int i = 0; i < nextLast; i++){
+            for (int i = 0; i < nextLast; i++) {
                 System.out.print(items[i] + " ");
             }
         }
