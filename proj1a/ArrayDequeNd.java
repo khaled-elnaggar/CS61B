@@ -13,32 +13,47 @@ public class ArrayDequeNd<T> {
         nextLast = items.length - 1;
     }
 
-    private void resize() {
-        T[] newArr = (T[]) new Object[items.length * 2];
+    private void checkResize() {
+        if (nextFirst + 1 == nextLast) {
+            resize(items.length * 2);
+        }
+    }
+
+
+    private void resize(int newSize) {
+        T[] newArr = (T[]) new Object[newSize];
         for (int i = 0; i < nextFirst; i++) {
             newArr[i] = items[i];
         }
+
+        int newIndex = newArr.length - 1;
+        int oldIndex = items.length - 1;
+        while (oldIndex > nextLast) {
+            newArr[newIndex] = items[oldIndex];
+            oldIndex--;
+            newIndex--;
+        }
+        items = newArr;
+        nextLast = newIndex;
+
+        /* // Old Implementation
         int amountOfLast = items.length - nextLast - 1;
         System.arraycopy(items, nextLast + 1, newArr, newArr.length - amountOfLast, amountOfLast);
         items = newArr;
         nextLast = items.length - amountOfLast - 1;
-
+        */
     }
 
 
     public void addFirst(T item) {
-        if (nextFirst + 1 == nextLast) {
-            resize();
-        }
+        checkResize();
         items[nextFirst] = item;
         nextFirst++;
         size++;
     }
 
     public void addLast(T item) {
-        if (nextLast - 1 == nextFirst) {
-            resize();
-        }
+        checkResize();
         items[nextLast] = item;
         nextLast--;
         size++;
@@ -50,6 +65,7 @@ public class ArrayDequeNd<T> {
         T ret = items[nextFirst];
         items[nextFirst] = null;
         size--;
+        checkResize();
         return ret;
     }
 
@@ -58,6 +74,7 @@ public class ArrayDequeNd<T> {
         T ret = items[nextLast];
         items[nextLast] = null;
         size--;
+        checkResize();
         return ret;
     }
 
