@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class ADTest {
 
-    ArrayDeque<String> ad = new ArrayDeque<>();
+    ArrayDequeNd<String> ad = new ArrayDequeNd<>();
 
     @Test
     public void testListInitialization() {
@@ -56,10 +56,27 @@ public class ADTest {
         ad.addLast("2");
         ad.addLast("3");
 
+        for(int i = 4; i < 100000; i++){
+            ad.addLast(Integer.toString(i));
+        }
+
         assertEquals("0", ad.get(0));
         assertEquals("3", ad.get(3));
+        assertEquals("8520", ad.get(8520));
         assertNull(ad.get(-1));
-        assertNull(ad.get(4));
+        assertNull(ad.get(9999999));
+    }
+
+    @Test
+    public void testIncSize() {
+        ad.addFirst("1");
+        ad.addFirst("0");
+        ad.addLast("2");
+        ad.addLast("3");
+        ad.addLast("4");
+        ad.addLast("5");
+        ad.addLast("6");
+        ad.addLast("7");
     }
 
 
