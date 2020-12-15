@@ -5,7 +5,7 @@ public class LinkedListDeque<T> {
         Node<T> next;
         Node<T> prev;
 
-        public Node(T item, Node<T> prev, Node<T> next) {
+        Node(T item, Node<T> prev, Node<T> next) {
             this.item = item;
             this.prev = prev;
             this.next = next;
@@ -91,7 +91,7 @@ public class LinkedListDeque<T> {
         return getRecursive(sentinel.next, index);
     }
 
-    public T getRecursive(Node<T> node, int index) {
+    private T getRecursive(Node<T> node, int index) {
         if (index == 0) {
             return node.item;
         }

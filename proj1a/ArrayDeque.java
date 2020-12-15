@@ -1,101 +1,158 @@
 public class ArrayDeque<T> {
-
     private T[] items;
     private int size;
     private int nextFirst;
     private int nextLast;
+    private int lastEle;
+    private CASE arrayCase;
 
-    public ArrayDeque() {
-        final int INITIAL_SIZE = 8;
-        items = (T[]) new Object[INITIAL_SIZE];
-        size = 0;
-        nextFirst = 0;
-        nextLast = items.length - 1;
+    enum CASE {
+        // Case ONE
+        //                   first      last
+        //   [ ] [ ] [ ] [ ] [ ] [x] [x] [ ] [ ] [ ] [ ]
+        ONE,
+
+        //          last     first
+        //   [x] [x] [ ] [ ] [ ] [x] [x] [x] [x] [x] [x]
+        //                              last first
+        //   [x] [x] [x] [x] [x] [x] [x] [ ] [ ] [x] [x]
+        TWO,
     }
 
-    private void checkResize() {
-        if (nextFirst + 1 == nextLast) {
+    public ArrayDeque() {
+        final int initialSize = 8;
+        items = (T[]) new Object[initialSize];
+        size = 0;
+        nextFirst = 0;
+        nextFirst = (int) initialSize / 2;
+        nextLast = nextFirst + 1;
+        lastEle = initialSize - 1;
+        arrayCase = CASE.ONE;
+    }
+
+    private void checkIncSize() {
+        if (size == items.length - 2) {
             resize(items.length * 2);
+            return;
         }
     }
 
+    private void checkDecSize() {
+        if (size * 1.0 / items.length < 0.25 && items.length >= 16) {
+            resize(items.length / 2);
+            return;
+        }
+    }
 
     private void resize(int newSize) {
         T[] newArr = (T[]) new Object[newSize];
-        for (int i = 0; i < nextFirst; i++) {
-            newArr[i] = items[i];
-        }
 
-        int newIndex = newArr.length - 1;
-        int oldIndex = items.length - 1;
-        while (oldIndex > nextLast) {
-            newArr[newIndex] = items[oldIndex];
-            oldIndex--;
-            newIndex--;
+        int oldIndex = nextFirst + 1;
+        int newIndex = newSize / 4;
+        nextFirst = newIndex - 1;
+
+        if (arrayCase == CASE.ONE) {
+            while (oldIndex < nextLast) {
+                newArr[newIndex] = items[oldIndex];
+                oldIndex++;
+                newIndex++;
+            }
+
+        } else if (arrayCase == CASE.TWO) {
+            while (oldIndex < items.length) {
+                newArr[newIndex] = items[oldIndex];
+                oldIndex++;
+                newIndex++;
+            }
+
+            oldIndex = 0;
+            while (oldIndex < nextLast) {
+                newArr[newIndex] = items[oldIndex];
+                oldIndex++;
+                newIndex++;
+            }
         }
         items = newArr;
         nextLast = newIndex;
-
-        /* // Old Implementation
-        int amountOfLast = items.length - nextLast - 1;
-        System.arraycopy(items, nextLast + 1, newArr, newArr.length - amountOfLast, amountOfLast);
-        items = newArr;
-        nextLast = items.length - amountOfLast - 1;
-        */
+        lastEle = newSize - 1;
+        arrayCase = CASE.ONE;
     }
-
 
     public void addFirst(T item) {
-        checkResize();
+        checkIncSize();
         items[nextFirst] = item;
-        nextFirst++;
         size++;
+
+        if (nextFirst == 0) {
+            nextFirst = lastEle;
+            arrayCase = CASE.TWO;
+        } else {
+            nextFirst--;
+        }
     }
+
 
     public void addLast(T item) {
-        checkResize();
+        checkIncSize();
         items[nextLast] = item;
-        nextLast--;
         size++;
+
+        if (nextLast == lastEle) {
+            nextLast = 0;
+            arrayCase = CASE.TWO;
+        } else {
+            nextLast++;
+        }
     }
 
-
     public T removeFirst() {
-        nextFirst--;
-        if (nextFirst < 0) {
-            nextFirst = items.length - 1;
+        if (size == 0) {
+            return null;
+        }
+        if (nextFirst == lastEle) {
+            nextFirst = 0;
+            arrayCase = CASE.ONE;
+        } else {
+            nextFirst++;
         }
         T ret = items[nextFirst];
         items[nextFirst] = null;
         size--;
-        checkResize();
+        checkDecSize();
         return ret;
     }
 
     public T removeLast() {
-        nextLast++;
-        if (nextLast > items.length - 1) {
-            nextLast = 0;
+        if (size == 0) {
+            return null;
+        }
+        if (nextLast == 0) {
+            nextLast = lastEle;
+            arrayCase = CASE.ONE;
+        } else {
+            nextLast--;
         }
         T ret = items[nextLast];
         items[nextLast] = null;
         size--;
-        checkResize();
+        checkDecSize();
         return ret;
     }
 
     public T get(int index) {
-        if (index >= size || index < 0) {
+        if (index < 0 || index >= items.length) {
             return null;
         }
-        if (index < nextFirst) {
-            return items[nextFirst - 1 - index];
+        if(arrayCase == CASE.ONE){
+            return items[nextFirst + 1 + index];
         } else {
-            int indexFromEnd = index - nextFirst;
-            return items[items.length - 1 - indexFromEnd];
+            if(nextFirst + 1 + index <= lastEle){
+                return items[nextFirst + 1 + index];
+            } else {
+                return items[nextFirst + index - lastEle];
+            }
         }
     }
-
 
     public boolean isEmpty() {
         return size == 0;
@@ -106,6 +163,20 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-
+        if(arrayCase == CASE.ONE){
+            for(int i = nextFirst + 1; i < nextLast; i++){
+                System.out.print(items[i] + " ");
+            }
+        } else {
+            for(int i = nextFirst + 1; i < items.length; i++){
+                System.out.print(items[i] + " ");
+            }
+            for(int i = 0; i < nextLast; i++){
+                System.out.print(items[i] + " ");
+            }
+        }
+        System.out.println();
     }
+
+
 }

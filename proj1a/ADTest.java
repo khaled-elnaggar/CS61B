@@ -63,16 +63,58 @@ public class ADTest {
         assertEquals("0", ad.get(0));
         assertEquals("3", ad.get(3));
         assertEquals("8520", ad.get(8520));
+        assertEquals("98303", ad.get(98303));
+        assertEquals("99999", ad.get(99999));
         assertNull(ad.get(-1));
         assertNull(ad.get(9999999));
     }
 
     @Test
     public void testIncSize() {
-        ad.addLast("0");
-        ad.addLast("1");
-        ad.addLast("2");
+        ad.addLast("4");
+        ad.addLast("5");
+        ad.addLast("6");
+        ad.addFirst("3");
+        ad.addLast("7");
+        ad.addFirst("2");
+        ad.addLast("8");
+        ad.addFirst("1");
+        ad.addLast("9");
+        ad.addFirst("0");
+        ad.printDeque();
         ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeFirst();
+        ad.removeLast();
+        ad.addLast("2");
+        ad.addFirst("3");
+        ad.addLast("2");
+        ad.addFirst("3");
+        ad.addLast("2");
+        ad.addFirst("3");
+        ad.removeFirst();
+        ad.removeLast();
+        ad.removeLast();
+        ad.removeLast();
+        ad.removeLast();
+        ad.addLast("2");
+        ad.addFirst("3");
+        ad.addLast("2");
+        ad.addFirst("3");
     }
 
 

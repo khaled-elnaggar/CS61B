@@ -1,18 +1,19 @@
 import static org.junit.Assert.*;
-import  org.junit.Test;
+
+import org.junit.Test;
 
 public class LLDTest {
     LinkedListDeque<String> lld = new LinkedListDeque<>();
 
     @Test
-    public void testListInitialization(){
+    public void testListInitialization() {
         assertNotNull(lld);
         assertEquals(0, lld.size());
         assertTrue(lld.isEmpty());
     }
 
     @Test
-    public void testAddRemoveFirst(){
+    public void testAddRemoveFirst() {
         lld.addFirst("second");
         assertEquals(1, lld.size());
         assertFalse(lld.isEmpty());
@@ -28,8 +29,9 @@ public class LLDTest {
         assertTrue(lld.isEmpty());
         assertEquals("second", actualFirst);
     }
+
     @Test
-    public void testAddRemoveLast(){
+    public void testAddRemoveLast() {
         lld.addLast("middle");
         assertEquals(1, lld.size());
         assertFalse(lld.isEmpty());
@@ -45,8 +47,9 @@ public class LLDTest {
         assertEquals(1, lld.size());
         assertEquals("middle", actualLast);
     }
+
     @Test
-    public void testGet(){
+    public void testGet() {
         lld.addFirst("1");
         lld.addFirst("0");
         lld.addLast("2");
@@ -59,7 +62,7 @@ public class LLDTest {
     }
 
     @Test
-    public void testGetRec(){
+    public void testGetRec() {
         lld.addFirst("1");
         lld.addFirst("0");
         lld.addLast("2");

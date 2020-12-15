@@ -29,6 +29,7 @@ public class XXArrayDeque<T> {
         }
         resize();
     }
+
     public void addFirst(T item) {
         items[nextFirst] = item;
         size++;
@@ -47,20 +48,22 @@ public class XXArrayDeque<T> {
         }
 
     }
+
     public void addLast(T item) {
         items[nextLast] = item;
         size++;
         incLast();
     }
 
-    private void decFirst(){
-        if(nextFirst == items.length - 1){
+    private void decFirst() {
+        if (nextFirst == items.length - 1) {
             nextFirst = 0;
-        }else{
+        } else {
             nextFirst++;
         }
         resize();
     }
+
     public T removeFirst() {
         decFirst();
         T ret = items[nextFirst];
@@ -69,14 +72,15 @@ public class XXArrayDeque<T> {
         return ret;
     }
 
-    private void decLast(){
-        if(nextLast == 0){
+    private void decLast() {
+        if (nextLast == 0) {
             nextLast = items.length - 1;
         } else {
             nextLast--;
         }
         resize();
     }
+
     public T removeLast() {
         decLast();
         T ret = items[nextLast];
@@ -94,10 +98,10 @@ public class XXArrayDeque<T> {
     }
 
     public T get(int index) {
-        if(index >= size || index < 0){
+        if (index >= size || index < 0) {
             return null;
         }
-        if(index + nextFirst + 1 < items.length){
+        if (index + nextFirst + 1 < items.length) {
             return items[index + nextFirst + 1];
         } else {
             return items[items.length - (index + nextFirst + 1)];
