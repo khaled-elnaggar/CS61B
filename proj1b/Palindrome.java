@@ -24,6 +24,9 @@ public class Palindrome {
         if(word == null){
             return false;
         }
+        if(cc == null){
+            return isPalindrome(word);
+        }
 
         Deque<Character> wordD = wordToDeque(word);
         while(wordD.size() > 1){
