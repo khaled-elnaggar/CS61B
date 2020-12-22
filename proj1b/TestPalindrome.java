@@ -28,4 +28,23 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("racecar"));
         assertTrue(palindrome.isPalindrome("noon"));
     }
+
+
+    @Test
+    public void testOffByOnePalindrome() {
+        OffByOne offByOne = new OffByOne();
+        assertFalse(palindrome.isPalindrome(null, offByOne));
+        assertFalse(palindrome.isPalindrome("racecar", offByOne));
+        assertFalse(palindrome.isPalindrome("aaaaab", offByOne));
+
+        assertTrue(palindrome.isPalindrome("", offByOne));
+        assertTrue(palindrome.isPalindrome("x", offByOne));
+        assertTrue(palindrome.isPalindrome("flake", offByOne));
+        assertTrue(palindrome.isPalindrome("acedb", offByOne));
+        assertTrue(palindrome.isPalindrome("bdeca", offByOne));
+        assertTrue(palindrome.isPalindrome("hjki", offByOne));
+        assertTrue(palindrome.isPalindrome("ikjh", offByOne));
+
+    }
+
 }
