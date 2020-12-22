@@ -19,12 +19,11 @@ public class PalindromeFinder {
 
         int minLength = 4;
 
-        palindromesGreaterThanN(minLength, null);
-        palindromesGreaterThanN(minLength, new OffByOne());
-        palindromesGreaterThanN(minLength, new OffByN(2));
-        palindromesGreaterThanN(minLength, new OffByN(3));
-        palindromesGreaterThanN(minLength, new OffByN(4));
-        palindromesGreaterThanN(minLength, new OffByN(5));
+        for(int i = 0; i < 7; i++){
+            System.out.print("Off by " + i + " ");
+            palindromesGreaterThanN(minLength, new OffByN(i));
+        }
+
 
 
     }
