@@ -10,11 +10,22 @@ public class TestPalindrome {
     public void testWordToDeque() {
         Deque d = palindrome.wordToDeque("persiflage");
         String actual = "";
-
         for (int i = 0; i < "persiflage".length(); i++) {
             actual += d.removeFirst();
         }
-
         assertEquals("persiflage", actual);
+    }
+
+    @Test
+    public void testIsPalindrome(){
+        assertFalse(palindrome.isPalindrome(null));
+        assertFalse(palindrome.isPalindrome("ab"));
+        assertFalse(palindrome.isPalindrome("aaaaab"));
+        assertFalse(palindrome.isPalindrome("rancor"));
+
+        assertTrue(palindrome.isPalindrome(""));
+        assertTrue(palindrome.isPalindrome("a"));
+        assertTrue(palindrome.isPalindrome("racecar"));
+        assertTrue(palindrome.isPalindrome("noon"));
     }
 }
