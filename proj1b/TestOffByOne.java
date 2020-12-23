@@ -1,4 +1,5 @@
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class TestOffByOne {
@@ -9,7 +10,7 @@ public class TestOffByOne {
     // Your tests go here.
 
     @Test
-    public void testOffByOne(){
+    public void testOffByOne() {
         assertTrue(offByOne.equalChars('a', 'b'));
         assertTrue(offByOne.equalChars('b', 'a'));
         assertTrue(offByOne.equalChars('r', 'q'));
@@ -17,5 +18,9 @@ public class TestOffByOne {
         assertFalse(offByOne.equalChars('a', 'x'));
         assertFalse(offByOne.equalChars('m', 't'));
         assertFalse(offByOne.equalChars('m', 'm'));
+        assertFalse(offByOne.equalChars('A', 'b'));
+        assertFalse(offByOne.equalChars('B', 'a'));
+        assertFalse(offByOne.equalChars('?', '%'));
+        assertFalse(offByOne.equalChars('+', '='));
     }
 }
