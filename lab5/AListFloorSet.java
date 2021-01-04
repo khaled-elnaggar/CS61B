@@ -18,13 +18,11 @@ public class AListFloorSet implements Lab5FloorSet {
     }
 
     public double floor(double x) {
-        if(items.size() == 0){
-            return Double.NEGATIVE_INFINITY;
-        }
-        double ret = items.get(0);
-        for(int i = 1; i < items.size(); i++){
-            if(items.get(i) < x && items.get(i) > ret){
-                ret = items.get(i);
+        double ret = Double.NEGATIVE_INFINITY;
+        for(int i = 0; i < items.size(); i++){
+            Double thisItem = items.get(i);
+            if(thisItem < x && thisItem > ret){
+                ret = thisItem;
             }
         }
         return ret;
