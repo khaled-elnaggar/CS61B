@@ -37,7 +37,7 @@ public class TimeSLList {
                 sList.addFirst(i);
             }
             Stopwatch sw = new Stopwatch();
-            for(int i = 0; i < M; i++){
+            for (int i = 0; i < M; i++) {
                 sList.getLast();
             }
             times.add(sw.elapsedTime());

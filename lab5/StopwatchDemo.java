@@ -2,7 +2,9 @@
  * Created by hug.
  */
 public class StopwatchDemo {
-    /** Computes the nth Fibonacci number using a slow naive recursive strategy.*/
+    /**
+     * Computes the nth Fibonacci number using a slow naive recursive strategy.
+     */
     private static int fib(int n) {
         if (n < 0) {
             return 0;
