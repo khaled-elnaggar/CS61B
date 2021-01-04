@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,7 +23,26 @@ public class TimeSLList {
     }
 
     public static void timeGetLast() {
-        // TODO: YOUR CODE HERE
-    }
+        final int M = 1000;
+        List<Integer> Ns = new ArrayList<>(Arrays.asList(1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000));
+        List<Integer> opCounts = new ArrayList<>();
+        List<Double> times = new ArrayList<>();
+        for (int ns : Ns) {
+            opCounts.add(M);
+        }
 
+        for (int ns : Ns) {
+            SLList<Integer> sList = new SLList<>();
+            for (int i = 0; i < ns; i++) {
+                sList.addFirst(i);
+            }
+            Stopwatch sw = new Stopwatch();
+            for(int i = 0; i < M; i++){
+                sList.getLast();
+            }
+            times.add(sw.elapsedTime());
+        }
+        printTimingTable(Ns, times, opCounts);
+    }
 }
+
