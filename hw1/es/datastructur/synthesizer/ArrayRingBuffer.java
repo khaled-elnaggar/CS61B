@@ -29,8 +29,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     @Override
     public void enqueue(T x) {
         if (fillCount == rb.length) {
-            // TODO: throw runtiem exception
-            return;
+            throw new RuntimeException("String Buffer overflow");
         }
         rb[last] = x;
         last = (last + 1 == rb.length) ? 0 : last + 1;
@@ -44,8 +43,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     @Override
     public T dequeue() {
         if (fillCount == 0) {
-            // TODO: throw runtiem exception
-            return null;
+            throw new RuntimeException("String Buffer underflow");
         }
         T retItem = rb[first];
         first = (first + 1 == rb.length) ? 0 : first + 1;
@@ -60,11 +58,39 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     @Override
     public T peek() {
         if (fillCount == 0) {
-            // TODO: throw runtiem exception
-            return null;
+            throw new RuntimeException("String Buffer underflow");
         }
         T retItem = rb[first];
         return retItem;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ARBIterator();
+    }
+
+    private class ARBIterator implements Iterator<T> {
+        int pos;
+        int passed;
+
+        public ARBIterator() {
+            pos = first;
+            passed = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return passed < fillCount;
+        }
+
+        @Override
+        public T next() {
+            T retItem = rb[pos];
+            pos = (pos + 1 == rb.length) ? 0 : pos + 1;
+            passed += 1;
+            return retItem;
+        }
+
     }
 
     /**
@@ -82,8 +108,4 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     public int fillCount() {
         return fillCount;
     }
-
-
-    // TODO: When you get to part 4, implement the needed code to support
-    //       iteration and equals.
 }
