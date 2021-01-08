@@ -108,4 +108,23 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     public int fillCount() {
         return fillCount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || o.getClass() != ArrayRingBuffer.class){
+            return false;
+        }
+        ArrayRingBuffer<T> ARB = (ArrayRingBuffer<T>) o;
+        if(this.fillCount() != ARB.fillCount()){
+            return false;
+        }
+        Iterator<T> thisIterator = iterator();
+        Iterator<T> otherIterator = ARB.iterator();
+        while(thisIterator.hasNext() && otherIterator.hasNext()){
+            if(thisIterator.next() != otherIterator.next()){
+                return false;
+            }
+        }
+        return true;
+    }
 }
