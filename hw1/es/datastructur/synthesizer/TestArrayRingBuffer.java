@@ -43,7 +43,28 @@ public class TestArrayRingBuffer {
             assertEquals(i * 1.2, arb.dequeue(), delta);
             assertEquals(4 - i, arb.fillCount());
         }
-
-
     }
+
+    @Test
+    public void equalityTest() {
+        ArrayRingBuffer<Double> arb1 = new ArrayRingBuffer<>(8);
+        ArrayRingBuffer<Double> arb2 = new ArrayRingBuffer<>(10);
+        arb1.enqueue(Double.NEGATIVE_INFINITY);
+        arb1.dequeue();
+        arb1.enqueue(Double.NEGATIVE_INFINITY);
+        arb1.dequeue();
+
+        for (int i = 0; i < 5; i++) {
+            arb1.enqueue((double) i);
+            arb2.enqueue((double) i);
+        }
+        for (double d : arb1) {
+            System.out.println(d);
+        }
+        for (double d : arb2) {
+            System.out.println(d);
+        }
+        assertEquals(arb1, arb2);
+    }
+
 }
