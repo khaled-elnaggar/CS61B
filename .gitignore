@@ -6,6 +6,8 @@
 !.fatweleminus
 !.gitignore
 !library-fa20
+library-fa20
+temp
 !foods.csv
 *.class
 *.log
