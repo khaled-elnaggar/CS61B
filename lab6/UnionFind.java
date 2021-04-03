@@ -70,27 +70,21 @@ public class UnionFind {
 
     }
 
-    public boolean equals(int[] arr){
+    public boolean equals(int[] arr) {
         return Arrays.equals(parent, arr);
     }
+
     /* Returns the root of the set v1 belongs to. Path-compression is employed
        allowing for fast search-time. */
     public int find(int v1) {
-        validate(v1);
-        while (parent[v1] > 0) {
-            v1 = parent[v1];
+        
+        if (parent[v1] < 0) {
+            return v1;
         }
-        return v1;
+        int root = find(parent[v1]);
+        parent[v1] = root;
+        return root;
 
-        /*
-        find(int v1){
-            if(parent[v1] < 0){
-              return v1;
-            }
-            int root = find(parent[v1]);
-            parent[v1]  = root;
-        }
-         */
     }
 
 }

@@ -38,7 +38,7 @@ public class UFTest {
         assertTrue(uf.equals(new int[]{-2, 0, -4, 2, 2, 4, -3, 6, 6}));
 
         uf.connect(5, 7);
-        assertTrue(uf.equals(new int[]{-2, 0, -7, 2, 2, 4, 2, 6, 6}));
+        assertTrue(uf.equals(new int[]{-2, 0, -7, 2, 2, 2, 2, 6, 6}));
 
     }
 
