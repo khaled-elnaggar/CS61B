@@ -12,13 +12,6 @@ public class Percolation {
     public Percolation(int N) {
         WQUF = new WeightedQuickUnionUF(N * N + 2);
         openSites = new boolean[N][N];
-        for(int i = 0; i < N; i++){
-            WQUF.union(N*N, i);
-        }
-        for(int i = N*N - 1; i >= N*N - N; i--){
-            WQUF.union(N*N + 1, i);
-        }
-
         openSize = 0;
         this.N = N;
     }
@@ -26,8 +19,8 @@ public class Percolation {
     private void validate(int row, int col){
         if (row < 0 || col < 0){
             throw new IllegalArgumentException("Grid doesn't have negative values");
-        } else if(row * N + col > N*N - 1){
-            throw new IndexOutOfBoundsException("Index is more than the grid");
+        } else if(row > N - 1 || col > N - 1){
+            throw new IndexOutOfBoundsException("Index is outside the grid");
         }
     }
 
@@ -54,6 +47,13 @@ public class Percolation {
         }
         if(col - 1 >= 0 && openSites[row][col - 1]){
             WQUF.union(mid, oneDIndex(row, col - 1));
+        }
+
+        if(row == 0){
+            WQUF.union(oneDIndex(row, col), N * N);
+        }
+        if(row == N - 1){
+            WQUF.union(oneDIndex(row, col), N * N + 1);
         }
     }
 
