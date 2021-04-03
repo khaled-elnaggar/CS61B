@@ -1,20 +1,24 @@
 package hw2;
-
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import java.lang.IndexOutOfBoundsException;
 
 public class Percolation {
     WeightedQuickUnionUF WQUF;
     boolean[][] openSites;
-    boolean perculates;
     int openSize;
     int N;
 
     // create N-by-N grid, with all sites initially blocked
     public Percolation(int N) {
-        WQUF = new WeightedQuickUnionUF(N * N);
+        WQUF = new WeightedQuickUnionUF(N * N + 2);
         openSites = new boolean[N][N];
-        perculates = false;
+        for(int i = 0; i < N; i++){
+            WQUF.union(N*N, i);
+        }
+        for(int i = N*N - 1; i >= N*N - N; i--){
+            WQUF.union(N*N + 1, i);
+        }
+
         openSize = 0;
         this.N = N;
     }
@@ -22,7 +26,7 @@ public class Percolation {
     private void validate(int row, int col){
         if (row < 0 || col < 0){
             throw new IllegalArgumentException("Grid doesn't have negative values");
-        } else if(row * N + col > N - 1){
+        } else if(row * N + col > N*N - 1){
             throw new IndexOutOfBoundsException("Index is more than the grid");
         }
     }
@@ -49,11 +53,7 @@ public class Percolation {
             WQUF.union(mid, oneDIndex(row + 1, col));
         }
         if(col - 1 >= 0 && openSites[row][col - 1]){
-            WQUF.union(mid, oneDIndex(row, col + 1));
-        }
-
-        if(mid >= N*N - N && WQUF.find(mid) < N){
-            perculates = true;
+            WQUF.union(mid, oneDIndex(row, col - 1));
         }
     }
 
@@ -66,7 +66,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col){
         validate(row, col);
-        return WQUF.find(oneDIndex(row, col)) < N;
+        return WQUF.connected(oneDIndex(row, col), N*N) && isOpen(row, col);
     }
 
     // number of open sites
@@ -76,7 +76,7 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates(){
-        return perculates;
+        return WQUF.connected(N*N, N*N + 1);
     }
 
     public static void main(String[] args){
