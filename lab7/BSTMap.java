@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -84,13 +85,34 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return node;
     }
 
-    public void printInOrder() {
+    public void printInOrder(){
+        printInOrder(sentinel.right);
+    }
+    private void printInOrder(Node n) {
+        if (n == null) {
+            return;
+        }
 
+        System.out.print (n.key + " ");
+        printInOrder(n.left);
+        printInOrder(n.right);
     }
 
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException("Working on it");
+        Set<K> keySet = new HashSet<>();
+        keySet(keySet, sentinel.right);
+        return keySet;
+    }
+
+    private void keySet(Set<K> keySet, Node n){
+        if (n == null) {
+            return;
+        }
+
+        keySet.add((K) n.key);
+        keySet(keySet, n.left);
+        keySet(keySet, n.right);
     }
 
     @Override
@@ -106,5 +128,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public Iterator<K> iterator() {
         throw new UnsupportedOperationException("Working on it");
+    }
+
+    public static void main(String[] args){
+        BSTMap<Integer, Double> bst = new BSTMap<>();
+        bst.put(5, 0.0);
+        bst.put(3, 0.0);
+        bst.put(4, 0.0);
+        bst.put(1, 0.0);
+        bst.put(7, 0.0);
+        bst.put(6, 0.0);
+        bst.put(8, 0.0);
+        bst.printInOrder();
     }
 }
