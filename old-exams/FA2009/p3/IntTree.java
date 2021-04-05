@@ -9,7 +9,8 @@ public class IntTree {
         this.right = right;
     }
 
-   
+   /* The idea is to keep and update a left and a right pointer
+	use the left if the lean.data < root and the right otherwise*/
     public static IntTree mergeRight(IntTree T, IntTree lean) {
         IntTree lptr = T.left;
         IntTree rptr = T.right;
@@ -26,6 +27,8 @@ public class IntTree {
     }
 
     public static IntTree mInsert(int data, IntTree ptr) {
+	// ptr2 to keep the last value before ptr = null
+	// now we know the parent (ptr2) of the newly added node (ptr)
         IntTree ptr2 = ptr;
 
         while (ptr != null) {
@@ -35,12 +38,15 @@ public class IntTree {
             } else if (data > ptr.data) {
                 ptr2 = ptr;
                 ptr = ptr.right;
+	    
+	    // Case t.data = data
             } else {
                 return ptr;
             }
         }
 
-       
+	
+       	//now ptr = null and ptr2 = parentOf(ptr)
         if (data < ptr2.data) {
             ptr2.left = new IntTree(data, null, null);
         } else {
