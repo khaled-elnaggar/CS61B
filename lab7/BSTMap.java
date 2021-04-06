@@ -115,9 +115,52 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         keySet(keySet, n.right);
     }
 
+    private Node maxLeft(Node n){
+        if(n.right == null){
+            return n;
+        }
+        return maxLeft(n.right);
+    }
+
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException("Working on it");
+        V retVal = get(key);
+
+        if(retVal == null){
+            return null;
+        } else {
+            remove(key, sentinel.right);
+            return retVal;
+        }
+    }
+
+    private Node remove(K key, Node node) {
+        int cmp = key.compareTo((K) node.key);
+        if(cmp == 0){
+
+            // in case it had 2 children
+            if (node.right != null && node.left != null) {
+                Node newRoot = maxLeft(node);
+                remove((K) newRoot.key, node);
+                newRoot.right = node.right;
+                newRoot.left = node.left;
+                return newRoot;
+            }
+
+            // in case there is only a single child;
+            if(node.right != null){
+                return node.right;
+            } else if(node.left != null){
+                return node.left;
+            }
+        }
+
+        if(cmp < 0){
+            node.left = remove(key, node.left);
+        } else {
+            node.right = remove(key, node.right);
+        }
+        return node;
     }
 
     @Override
