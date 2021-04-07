@@ -77,6 +77,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
 
         int cmp = key.compareTo((K) node.key);
+        if(cmp == 0){
+            node.value = value;
+        }
         if (cmp < 0) {
             node.left = put(key, value, node.left);
         } else if (cmp > 0) {
@@ -122,6 +125,13 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return maxLeft(n.right);
     }
 
+    private Node minRight(Node n) {
+        if(n.left == null){
+            return n;
+        }
+        return minRight(n.left);
+    }
+
     @Override
     public V remove(K key) {
         V retVal = get(key);
@@ -129,7 +139,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if(retVal == null){
             return null;
         } else {
-            remove(key, sentinel.right);
+            sentinel.right = remove(key, sentinel.right);
+            size -= 1;
             return retVal;
         }
     }
@@ -140,18 +151,20 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
             // in case it had 2 children
             if (node.right != null && node.left != null) {
-                Node newRoot = maxLeft(node);
+                Node newRoot = (node.left != null) ? maxLeft(node.left) : minRight(node.right);
                 remove((K) newRoot.key, node);
                 newRoot.right = node.right;
                 newRoot.left = node.left;
                 return newRoot;
             }
 
-            // in case there is only a single child;
+            // in case there is only a single child or leaf
             if(node.right != null){
                 return node.right;
             } else if(node.left != null){
                 return node.left;
+            } else {
+                return null;
             }
         }
 
