@@ -187,7 +187,24 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException("Working on it");
+        return new KeysIterator(this);
+    }
+
+    private class KeysIterator implements Iterator {
+        Iterator setIterator;
+        public KeysIterator(BSTMap<K, V> bst){
+            setIterator = bst.keySet().iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return setIterator.hasNext();
+        }
+
+        @Override
+        public K next() {
+            return (K) setIterator.next();
+        }
     }
 
     public static void main(String[] args){
@@ -200,5 +217,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         bst.put(6, 0.0);
         bst.put(8, 0.0);
         bst.printInOrder();
+
+        for(Integer key : bst){
+            System.out.println(key);
+        }
+
     }
 }
