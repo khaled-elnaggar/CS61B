@@ -75,6 +75,9 @@ public class TestBSTMap {
     	BSTMap<String, Integer> b = new BSTMap<String, Integer>();
         b.put("hi", 1);
         assertTrue(b.containsKey("hi") && b.get("hi") != null);
+        b.put("hi", null);
+        assertTrue(!b.containsKey("hi") && b.get("hi") == null);
+        assertEquals(0, b.size());
     }
 
     public static void main(String[] args) {
