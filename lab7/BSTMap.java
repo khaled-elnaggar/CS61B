@@ -67,6 +67,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             size = 1;
             return;
         }
+        if(value == null){
+            remove(key);
+            return;
+        }
         put(key, value, sentinel.right);
     }
 
