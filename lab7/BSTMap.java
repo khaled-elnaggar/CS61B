@@ -62,16 +62,11 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void put(K key, V value) {
-        if (size == 0) {
-            sentinel.right = new Node(key, value);
-            size = 1;
-            return;
-        }
         if(value == null){
             remove(key);
             return;
         }
-        put(key, value, sentinel.right);
+        sentinel.right = put(key, value, sentinel.right);
     }
 
     private Node put(K key, V value, Node node) {
