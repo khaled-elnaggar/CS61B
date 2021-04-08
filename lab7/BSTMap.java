@@ -31,13 +31,20 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         size = 0;
     }
 
+    private boolean validate(K key) {
+        if(key == null){
+            throw new IllegalArgumentException("Key cannot be null");
+        }
+    }
     @Override
     public boolean containsKey(K key) {
+        validate(key);
         return get(key) != null;
     }
 
     @Override
     public V get(K key) {
+        validate(key);
         return (V) get(key, sentinel.right);
     }
 
@@ -62,9 +69,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void put(K key, V value) {
-        if(key == null){
-            return;
-        }
+        validate(key);
         if(value == null){
             remove(key);
             return;
@@ -136,6 +141,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public V remove(K key) {
+        validate(key);
         V retVal = get(key);
 
         if(retVal == null){
