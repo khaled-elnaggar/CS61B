@@ -129,7 +129,13 @@ public class TestBSTMapExtra {
         assertEquals('X', (long) index.floor( 'X'));
         assertEquals('S', (long) index.floor( 'S'));
         assertEquals('S', (long) index.floor( 'W'));
+
+        assertEquals('C', (long) index.ceiling('B'));
+        assertEquals('X', (long) index.ceiling('T'));
+        assertEquals('M', (long) index.ceiling('J'));
+        assertEquals('E', (long) index.ceiling('E'));
     }
+
 
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMapExtra.class);
