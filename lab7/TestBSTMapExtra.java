@@ -123,6 +123,12 @@ public class TestBSTMapExtra {
         index.put('H', 1);
         index.put('M', 1);
         assertEquals('E', (long) index.floor( 'G'));
+        assertEquals('M', (long) index.floor( 'Q'));
+        assertEquals('C', (long) index.floor( 'D'));
+        assertEquals('X', (long) index.floor( 'Z'));
+        assertEquals('X', (long) index.floor( 'X'));
+        assertEquals('S', (long) index.floor( 'S'));
+        assertEquals('S', (long) index.floor( 'W'));
     }
 
     public static void main(String[] args) {
