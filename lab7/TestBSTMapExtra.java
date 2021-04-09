@@ -111,6 +111,20 @@ public class TestBSTMapExtra {
         assertEquals(null, noChild.get('Z'));
     }
 
+    @Test
+    public void testFloorCeiling(){
+        BSTMap<Character, Integer> index = new BSTMap<>();
+        index.put('S', 1);
+        index.put('E', 1);
+        index.put('X', 1);
+        index.put('A', 1);
+        index.put('R', 1);
+        index.put('C', 1);
+        index.put('H', 1);
+        index.put('M', 1);
+        assertEquals('E', (long) index.floor( 'G'));
+    }
+
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMapExtra.class);
     }
