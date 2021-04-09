@@ -225,14 +225,14 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if(n == null){
             return null;
         }
-        int cmp = key.compareTo((K) n.key);
+        int cmp = ((K) n.key).compareTo(key);
 
         Node t = null;
 
         if(cmp <= 0){
             t = floor(key, n.right);
         } else {
-            t = floor(key, n.left);
+           return floor(key, n.left);
         }
 
         if(t == null){
