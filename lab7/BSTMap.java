@@ -11,12 +11,14 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         private V value;
         private Node left;
         private Node right;
+        private int N;
 
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
             left = null;
             right = null;
+            N = 1;
         }
     }
 
@@ -68,7 +70,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public int size() {
         return size;
     }
-
+    private int size(Node n){
+        if(n == null){
+            return 0;
+        }
+        return size(n.left) + size(n.right) + 1;
+    }
     @Override
     public void put(K key, V value) {
         validate(key);
@@ -94,6 +101,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         } else if (cmp > 0) {
             node.right = put(key, value, node.right);
         }
+        node.N = size(node.left) + size(node.right) + 1;
         return node;
     }
 
@@ -157,18 +165,20 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private Node remove(K key, Node node) {
         int cmp = key.compareTo((K) node.key);
-        if(cmp == 0){
 
-            // in case it had 2 children
+        // Found the key-value pair we're looking for
+        if(cmp == 0){
+            // In case it has 2 children
             if (node.right != null && node.left != null) {
                 Node newRoot = (node.left != null) ? maxLeft(node.left) : minRight(node.right);
                 remove((K) newRoot.key, node);
                 newRoot.right = node.right;
                 newRoot.left = node.left;
+                newRoot.N = size(newRoot.left) + size(newRoot.right) + 1;
                 return newRoot;
             }
 
-            // in case there is only a single child or leaf
+            // In case there is only a single child or leaf
             if(node.right != null){
                 return node.right;
             } else if(node.left != null){
@@ -183,6 +193,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         } else {
             node.right = remove(key, node.right);
         }
+
+        node.N = size(node.left) + size(node.right) + 1;
         return node;
     }
 
@@ -268,6 +280,21 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
+    public K select(int r){
+        return (K) select(r + 1, sentinel.right);
+    }
+
+    private K select(int r, Node n) {
+        int leftSize = size(n.left);
+        if(leftSize > r){
+            return (K) select(r, n.left);
+        } else if (leftSize < r){
+            return (K) select(r - (n.N - leftSize), n.right);
+        } else {
+            return (K) n.key;
+        }
+    }
+
     public static void main(String[] args){
         BSTMap<Integer, Double> bst = new BSTMap<>();
         bst.put(5, 0.0);
@@ -282,5 +309,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         for(Integer key : bst){
             System.out.println(key);
         }
+
+        bst.remove(3);
+        bst.remove(8);
+        bst.remove(4);
     }
 }
