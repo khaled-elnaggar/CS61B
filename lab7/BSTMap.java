@@ -213,6 +213,35 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
+    public K floor(K key){
+        Node ret = floor(key, sentinel.right);
+        if(ret != null){
+            return (K) ret.key;
+        } else {
+            return null;
+        }
+    }
+    private Node floor(K key, Node n){
+        if(n == null){
+            return null;
+        }
+        int cmp = key.compareTo((K) n.key);
+
+        Node t = null;
+
+        if(cmp <= 0){
+            t = floor(key, n.right);
+        } else {
+            t = floor(key, n.left);
+        }
+
+        if(t == null){
+            return n;
+        } else {
+            return t;
+        }
+    }
+
     public static void main(String[] args){
         BSTMap<Integer, Double> bst = new BSTMap<>();
         bst.put(5, 0.0);
@@ -227,6 +256,5 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         for(Integer key : bst){
             System.out.println(key);
         }
-
     }
 }
