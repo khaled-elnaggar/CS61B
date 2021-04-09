@@ -136,6 +136,24 @@ public class TestBSTMapExtra {
         assertEquals('E', (long) index.ceiling('E'));
     }
 
+   @Test
+   public void testSelect(){
+       BSTMap<Integer, Double> bst = new BSTMap<>();
+       bst.put(5, 0.0);
+       bst.put(3, 0.0);
+       bst.put(4, 0.0);
+       bst.put(1, 0.0);
+       bst.put(7, 0.0);
+       bst.put(6, 0.0);
+       bst.put(8, 0.0);
+       assertEquals(1, (long) bst.select(0));
+       assertEquals(3, (long) bst.select(1));
+       assertEquals(4, (long) bst.select(2));
+       assertEquals(5, (long) bst.select(3));
+       assertEquals(6, (long) bst.select(4));
+       assertEquals(7, (long) bst.select(5));
+       assertEquals(8, (long) bst.select(6));
+   }
 
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMapExtra.class);
