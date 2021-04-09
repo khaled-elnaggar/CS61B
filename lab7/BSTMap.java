@@ -281,7 +281,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     public K select(int r){
-        return (K) select(r + 1, sentinel.right);
+        return (K) select(r, sentinel.right);
     }
 
     private K select(int r, Node n) {
