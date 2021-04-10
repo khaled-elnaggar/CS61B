@@ -300,15 +300,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private int rank(K key, Node n) {
         if(n == null){
-            return -1 * size;
+            return -10 * size;
         }
         int cmp = key.compareTo((K) n.key);
         if(cmp < 0){
             return rank(key, n.left);
         } else if(cmp > 0) {
-            return n.left.N + 1 + rank(key, n.right);
+            return size(n.left) + 1 + rank(key, n.right);
         } else {
-            return 1;
+            return size(n.left);
         }
     }
 
