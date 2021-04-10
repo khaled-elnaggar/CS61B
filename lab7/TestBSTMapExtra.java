@@ -155,6 +155,26 @@ public class TestBSTMapExtra {
        assertEquals(8, (long) bst.select(6));
    }
 
+   @Test
+   public void testRank(){
+       BSTMap<Integer, Double> bst = new BSTMap<>();
+       bst.put(5, 0.0);
+       bst.put(3, 0.0);
+       bst.put(4, 0.0);
+       bst.put(1, 0.0);
+       bst.put(7, 0.0);
+       bst.put(6, 0.0);
+       bst.put(8, 0.0);
+       assertEquals(0, (long) bst.rank(1));
+       assertEquals(1, (long) bst.rank(3));
+       assertEquals(2, (long) bst.rank(4));
+       assertEquals(3, (long) bst.rank(5));
+       assertEquals(4, (long) bst.rank(6));
+       assertEquals(5, (long) bst.rank(7));
+       assertEquals(6, (long) bst.rank(8));
+       assertTrue((long) bst.rank(-10) < 0);
+       assertTrue((long) bst.rank(999) < 0);
+   }
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMapExtra.class);
     }
