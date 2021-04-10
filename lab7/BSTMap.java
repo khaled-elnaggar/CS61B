@@ -283,7 +283,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public K select(int r){
         return (K) select(r, sentinel.right);
     }
-
     private K select(int r, Node n) {
         int leftSize = size(n.left);
         if(leftSize > r){
@@ -292,6 +291,24 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             return (K) select(r - (n.N - leftSize), n.right);
         } else {
             return (K) n.key;
+        }
+    }
+
+    public int rank(K key){
+        return rank(key, sentinel.right);
+    }
+
+    private int rank(K key, Node n) {
+        if(n == null){
+            return -1 * size;
+        }
+        int cmp = key.compareTo((K) n.key);
+        if(cmp < 0){
+            return rank(key, n.left);
+        } else if(cmp > 0) {
+            return n.left.N + 1 + rank(key, n.right);
+        } else {
+            return 1;
         }
     }
 
