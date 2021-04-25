@@ -312,26 +312,26 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
-    public Collection<K> range(int l, int h) {
+    public Collection<K> rankRange(int l, int h) {
         LinkedList q = new LinkedList<>();
-        range(sentinel.right, q, l, h);
+        rankRange(sentinel.right, q, l, h);
         return q;
     }
 
-    private void range(Node node, LinkedList q, int low, int high) {
+    private void rankRange(Node node, LinkedList q, int low, int high) {
         if (node == null) {
             return;
         }
 
         int currRank = size(node.left);
         if (currRank < low) {
-            range(node.right, q, low - currRank - 1, high - currRank - 1);
+            rankRange(node.right, q, low - currRank - 1, high - currRank - 1);
         } else if (currRank > high) {
-            range(node.left, q, low, high);
+            rankRange(node.left, q, low, high);
         } else {
-            range(node.left, q, low, high);
+            rankRange(node.left, q, low, high);
             q.addLast((K) node.key);
-            range(node.right, q, low - currRank - 1, high - currRank  -1);
+            rankRange(node.right, q, low - currRank - 1, high - currRank  -1);
         }
     }
 

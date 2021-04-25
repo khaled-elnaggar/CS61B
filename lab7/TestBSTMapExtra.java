@@ -186,7 +186,7 @@ public class TestBSTMapExtra {
    }
 
     @Test
-    public void testRange(){
+    public void testRankRange(){
         BSTMap<Integer, Double> bst = new BSTMap<>();
         bst.put(5, 0.0);
         bst.put(3, 0.0);
@@ -195,10 +195,10 @@ public class TestBSTMapExtra {
         bst.put(7, 0.0);
         bst.put(6, 0.0);
         bst.put(8, 0.0);
-        assertTrue(Arrays.asList(1, 3, 4).containsAll(bst.range(0, 2)));
-        assertTrue(Arrays.asList(4, 5, 6).containsAll(bst.range(2, 4)));
-        assertTrue(Arrays.asList(6, 7, 8).containsAll(bst.range(4, 6)));
-        assertTrue(Arrays.asList(7, 8).containsAll(bst.range(5, 10)));
+        assertTrue(Arrays.asList(1, 3, 4).containsAll(bst.rankRange(0, 2)));
+        assertTrue(Arrays.asList(4, 5, 6).containsAll(bst.rankRange(2, 4)));
+        assertTrue(Arrays.asList(6, 7, 8).containsAll(bst.rankRange(4, 6)));
+        assertTrue(Arrays.asList(7, 8).containsAll(bst.rankRange(5, 10)));
     }
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMapExtra.class);
