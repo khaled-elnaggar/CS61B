@@ -199,6 +199,7 @@ public class TestBSTMapExtra {
         assertTrue(Arrays.asList(4, 5, 6).containsAll(bst.rankRange(2, 4)));
         assertTrue(Arrays.asList(6, 7, 8).containsAll(bst.rankRange(4, 6)));
         assertTrue(Arrays.asList(7, 8).containsAll(bst.rankRange(5, 10)));
+        assertTrue(Arrays.asList(1, 3, 4, 5, 6, 7, 8).containsAll(bst.rankRange(-100, 500)));
     }
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMapExtra.class);
