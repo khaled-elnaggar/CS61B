@@ -1,6 +1,4 @@
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private Node sentinel;
@@ -314,6 +312,30 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
+    public Collection<K> range(int l, int h) {
+        LinkedList q = new LinkedList<>();
+        range(sentinel.right, q, l, h);
+        return q;
+    }
+
+    private void range(Node node, LinkedList q, int low, int high) {
+        if (node == null) {
+            return;
+        }
+
+        int currRank = size(node.left);
+        if (currRank < low) {
+            range(node.right, q, low - currRank - 1, high - currRank - 1);
+        } else if (currRank > high) {
+            range(node.left, q, low, high);
+        } else {
+            range(node.left, q, low, high);
+            q.addLast((K) node.key);
+            range(node.right, q, low - currRank - 1, high - currRank  -1);
+        }
+    }
+
+
     public static void main(String[] args) {
         BSTMap<Integer, Double> bst = new BSTMap<>();
         bst.put(5, 0.0);
@@ -328,7 +350,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         for (Integer key : bst) {
             System.out.println(key);
         }
-
         bst.remove(3);
         bst.remove(8);
         bst.remove(4);
