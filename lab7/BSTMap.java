@@ -73,7 +73,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (n == null) {
             return 0;
         }
-        return size(n.left) + size(n.right) + 1;
+        return n.N;
     }
 
     @Override
