@@ -35,7 +35,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     private void validate(K key) {
-        if(key == null){
+        if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
     }
@@ -57,9 +57,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             return null;
         }
         int cmp = key.compareTo((K) node.key);
-        if (cmp < 0){
+        if (cmp < 0) {
             return (V) get(key, node.left);
-        } else if (cmp > 0){
+        } else if (cmp > 0) {
             return (V) get(key, node.right);
         } else {
             return (V) node.value;
@@ -70,16 +70,18 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public int size() {
         return size;
     }
-    private int size(Node n){
-        if(n == null){
+
+    private int size(Node n) {
+        if (n == null) {
             return 0;
         }
         return size(n.left) + size(n.right) + 1;
     }
+
     @Override
     public void put(K key, V value) {
         validate(key);
-        if(value == null){
+        if (value == null) {
             remove(key);
             return;
         }
@@ -93,7 +95,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
 
         int cmp = key.compareTo((K) node.key);
-        if(cmp == 0){
+        if (cmp == 0) {
             node.value = value;
         }
         if (cmp < 0) {
@@ -105,15 +107,16 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return node;
     }
 
-    public void printInOrder(){
+    public void printInOrder() {
         printInOrder(sentinel.right);
     }
+
     private void printInOrder(Node n) {
         if (n == null) {
             return;
         }
 
-        System.out.print (n.key + " ");
+        System.out.print(n.key + " ");
         printInOrder(n.left);
         printInOrder(n.right);
     }
@@ -125,7 +128,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return keySet;
     }
 
-    private void keySet(Set<K> keySet, Node n){
+    private void keySet(Set<K> keySet, Node n) {
         if (n == null) {
             return;
         }
@@ -135,15 +138,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         keySet(keySet, n.right);
     }
 
-    private Node maxLeft(Node n){
-        if(n.right == null){
+    private Node maxLeft(Node n) {
+        if (n.right == null) {
             return n;
         }
         return maxLeft(n.right);
     }
 
     private Node minRight(Node n) {
-        if(n.left == null){
+        if (n.left == null) {
             return n;
         }
         return minRight(n.left);
@@ -154,7 +157,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         validate(key);
         V retVal = get(key);
 
-        if(retVal == null){
+        if (retVal == null) {
             return null;
         } else {
             sentinel.right = remove(key, sentinel.right);
@@ -166,32 +169,27 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private Node remove(K key, Node node) {
         int cmp = key.compareTo((K) node.key);
 
-        // Found the key-value pair we're looking for
-        if(cmp == 0){
-            // In case it has 2 children
-            if (node.right != null && node.left != null) {
-                Node newRoot = (node.left != null) ? maxLeft(node.left) : minRight(node.right);
-                remove((K) newRoot.key, node);
-                newRoot.right = node.right;
-                newRoot.left = node.left;
-                newRoot.N = size(newRoot.left) + size(newRoot.right) + 1;
-                return newRoot;
-            }
-
-            // In case there is only a single child or leaf
-            if(node.right != null){
-                return node.right;
-            } else if(node.left != null){
-                return node.left;
-            } else {
-                return null;
-            }
-        }
-
-        if(cmp < 0){
+        //check to further go down the tree
+        if (cmp < 0) {
             node.left = remove(key, node.left);
-        } else {
+        } else if (cmp > 0) {
             node.right = remove(key, node.right);
+
+            // cmp = 0, we found the key-value pair we're looking for
+        } else {
+            // In case there is only a single child or leaf
+            if (node.right == null) {
+                return node.left;
+            } else if (node.left == null) {
+                return node.right;
+            }
+            // If we reach this, then node has 2 children
+            Node newRoot = (node.left != null) ? maxLeft(node.left) : minRight(node.right);
+            remove((K) newRoot.key, node);
+            newRoot.right = node.right;
+            newRoot.left = node.left;
+            newRoot.N = size(newRoot.left) + size(newRoot.right) + 1;
+            return newRoot;
         }
 
         node.N = size(node.left) + size(node.right) + 1;
@@ -210,7 +208,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private class KeysIterator implements Iterator {
         Iterator setIterator;
-        public KeysIterator(BSTMap<K, V> bst){
+
+        public KeysIterator(BSTMap<K, V> bst) {
             setIterator = bst.keySet().iterator();
         }
 
@@ -224,9 +223,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             return (K) setIterator.next();
         }
     }
-    public K ceiling(K key){
+
+    public K ceiling(K key) {
         Node n = ceiling(key, sentinel.right);
-        if(n != null){
+        if (n != null) {
             return (K) n.key;
         } else {
             return null;
@@ -234,85 +234,87 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     private Node ceiling(K key, Node n) {
-        if(n == null){
+        if (n == null) {
             return null;
         }
         Node t = null;
         int cmp = ((K) n.key).compareTo(key);
-        if (cmp >= 0){
+        if (cmp >= 0) {
             t = ceiling(key, n.left);
         } else {
             return ceiling(key, n.right);
         }
-        if(t == null){
+        if (t == null) {
             return n;
         } else {
             return t;
         }
     }
 
-    public K floor(K key){
+    public K floor(K key) {
         Node ret = floor(key, sentinel.right);
-        if(ret != null){
+        if (ret != null) {
             return (K) ret.key;
         } else {
             return null;
         }
     }
-    private Node floor(K key, Node n){
-        if(n == null){
+
+    private Node floor(K key, Node n) {
+        if (n == null) {
             return null;
         }
         int cmp = ((K) n.key).compareTo(key);
 
         Node t = null;
 
-        if(cmp <= 0){
+        if (cmp <= 0) {
             t = floor(key, n.right);
         } else {
-           return floor(key, n.left);
+            return floor(key, n.left);
         }
 
-        if(t == null){
+        if (t == null) {
             return n;
         } else {
             return t;
         }
     }
 
-    public K select(int r){
+    public K select(int r) {
         return (K) select(r, sentinel.right);
     }
+
     private K select(int r, Node n) {
         int leftSize = size(n.left);
-        if(leftSize > r){
+        if (leftSize > r) {
             return (K) select(r, n.left);
-        } else if (leftSize < r){
+        } else if (leftSize < r) {
             return (K) select(r - (n.N - leftSize), n.right);
         } else {
             return (K) n.key;
         }
     }
 
-    public int rank(K key){
+    public int rank(K key) {
         return rank(key, sentinel.right);
     }
 
     private int rank(K key, Node n) {
-        if(n == null){
+        if (n == null) {
             return -10 * size;
         }
         int cmp = key.compareTo((K) n.key);
-        if(cmp < 0){
+        if (cmp < 0) {
             return rank(key, n.left);
-        } else if(cmp > 0) {
+        } else if (cmp > 0) {
             return size(n.left) + 1 + rank(key, n.right);
         } else {
             return size(n.left);
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         BSTMap<Integer, Double> bst = new BSTMap<>();
         bst.put(5, 0.0);
         bst.put(3, 0.0);
@@ -323,7 +325,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         bst.put(8, 0.0);
         bst.printInOrder();
 
-        for(Integer key : bst){
+        for (Integer key : bst) {
             System.out.println(key);
         }
 
