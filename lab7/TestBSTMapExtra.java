@@ -1,7 +1,16 @@
+import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+/*
+ *          5
+ *        /   \
+ *       3     7
+ *      / \   / \
+ *     1  4  6  8
+ */
 
 /** Tests of optional parts of lab 8. */
 public class TestBSTMapExtra {
@@ -175,6 +184,22 @@ public class TestBSTMapExtra {
        assertTrue((long) bst.rank(-10) < 0);
        assertTrue((long) bst.rank(999) < 0);
    }
+
+    @Test
+    public void testRange(){
+        BSTMap<Integer, Double> bst = new BSTMap<>();
+        bst.put(5, 0.0);
+        bst.put(3, 0.0);
+        bst.put(4, 0.0);
+        bst.put(1, 0.0);
+        bst.put(7, 0.0);
+        bst.put(6, 0.0);
+        bst.put(8, 0.0);
+        assertTrue(Arrays.asList(1, 3, 4).containsAll(bst.range(0, 2)));
+        assertTrue(Arrays.asList(4, 5, 6).containsAll(bst.range(2, 4)));
+        assertTrue(Arrays.asList(6, 7, 8).containsAll(bst.range(4, 6)));
+        assertTrue(Arrays.asList(7, 8).containsAll(bst.range(5, 10)));
+    }
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMapExtra.class);
     }
