@@ -82,11 +82,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     }
 
     private void resize() {
-        if (size * 1.0 / initialSize < 0.75) {
+        if (size * 1.0 / hashmap.length < 0.75) {
             return;
         }
-
-        int newSize = initialSize * 2;
+        int newSize = hashmap.length * 2;
         LinkedList[] newHashMap;
         newHashMap = new LinkedList[newSize];
         for (int i = 0; i < newHashMap.length; i++) {
@@ -101,6 +100,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
                 putInto(key, value, newHashMap);
             }
         }
+        hashmap = newHashMap;
     }
 
 
