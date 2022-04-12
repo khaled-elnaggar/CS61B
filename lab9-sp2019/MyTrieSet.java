@@ -30,6 +30,10 @@ public class MyTrieSet implements TrieSet61B {
             isKey = key;
         }
 
+        public void remove(char key) {
+            map.remove(key);
+        }
+
         public Set<Map.Entry<Character, Node>> getEntries() {
             return map.entrySet();
         }
@@ -145,23 +149,35 @@ public class MyTrieSet implements TrieSet61B {
             });
         } else {
             final Node node1 = node.get(c);
-            if(node1 == null)
+            if (node1 == null)
                 return;
             keysThatMatch(s.substring(1), matchingKeys, key + c, node1);
         }
     }
 
-    public static void main(String[] args) {
-        String[] saStrings = new String[]{"same", "sam", "sad", "sap"};
-        String[] otherStrings = new String[]{"a", "awls", "hello"};
+    public void delete(String s) {
+        if (!contains(s)) return;
+        size = size - 1;
+        delete(s, root);
+    }
 
-        MyTrieSet t = new MyTrieSet();
-        for (String s : saStrings) {
-            t.add(s);
+    private boolean delete(String s, Node node) {
+        if (s.length() == 0) {
+            if (!node.isKey()) {
+                throw new RuntimeException("Sanity fail! This node should be the key node!");
+            }
+
+            node.setKey(false);
+            return node.getEntries().isEmpty();
         }
-        for (String s : otherStrings) {
-            t.add(s);
+        final char currChar = s.charAt(0);
+        boolean shouldCutTree = delete(s.substring(1), node.get(currChar));
+
+
+        if (shouldCutTree && node.getEntries().size() > 1 || shouldCutTree && node.equals(root)) {
+            node.remove(currChar);
+            return false;
         }
-        System.out.println(t.keys());
+        return shouldCutTree;
     }
 }

@@ -81,7 +81,7 @@ public class TestMyTrieSet {
         String[] saStrings =
                 new String[]{"same", "sam", "sad", "sap",
                         "she", "see",
-                        "ninx", "canx", "plnx"};
+                        "ninx", "canx", "plnx", "asdnx", "anx"};
 
         MyTrieSet t = new MyTrieSet();
         for (String s : saStrings) {
@@ -102,6 +102,28 @@ public class TestMyTrieSet {
         final List<String> expectedMatch3 = List.of("ninx", "canx", "plnx");
         assertEquals(expectedMatch3.size(), matchingKeys3.size());
         assertTrue(expectedMatch3.containsAll(matchingKeys3));
+    }
 
+    @Test
+    public void deleteSomeKey() {
+
+    }
+
+    @Test
+    public void deleteKey() {
+        MyTrieSet t = new MyTrieSet();
+        String[] saStrings =
+                new String[]{"abcdefg", "ab", "abx", "aby"};
+
+        for (String s : saStrings) {
+            t.add(s);
+        }
+
+        for (String s : saStrings) {
+            t.delete(s);
+        }
+
+        assertFalse(t.contains("abcdefg"));
+        assertEquals(0, t.size());
     }
 }
