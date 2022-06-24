@@ -12,7 +12,7 @@ public class MyTrieSet implements TrieSet61B {
     private static class Node {
         private boolean isKey = false;
 
-        private final Map<Character, Node> map = new HashMap<>();
+        private final Map<Character, Node> map = new HashMap<>(4);
 
         public Node get(char key) {
             return map.get(key);
@@ -134,24 +134,22 @@ public class MyTrieSet implements TrieSet61B {
         return matchingKeys;
     }
 
-    private void keysThatMatch(String s, List<String> matchingKeys, String key, Node node) {
-        if (s.length() == 0) {
+    private void keysThatMatch(String pattern, List<String> matchingKeys, String key, Node node) {
+        if (node == null) return;
+        if (pattern.length() == 0) {
             if (node.isKey())
                 matchingKeys.add(key);
             return;
         }
 
-        char c = s.charAt(0);
-        Set<Node> matchingSets = new HashSet<>();
+        char c = pattern.charAt(0);
         if (c == '.') {
             node.getEntries().forEach(characterNodeEntry -> {
-                keysThatMatch(s.substring(1), matchingKeys, key + characterNodeEntry.getKey(), characterNodeEntry.getValue());
+                keysThatMatch(pattern.substring(1), matchingKeys, key + characterNodeEntry.getKey(), characterNodeEntry.getValue());
             });
         } else {
             final Node node1 = node.get(c);
-            if (node1 == null)
-                return;
-            keysThatMatch(s.substring(1), matchingKeys, key + c, node1);
+            keysThatMatch(pattern.substring(1), matchingKeys, key + c, node1);
         }
     }
 
@@ -163,21 +161,18 @@ public class MyTrieSet implements TrieSet61B {
 
     private boolean delete(String s, Node node) {
         if (s.length() == 0) {
-            if (!node.isKey()) {
-                throw new RuntimeException("Sanity fail! This node should be the key node!");
-            }
-
             node.setKey(false);
             return node.getEntries().isEmpty();
         }
+
         final char currChar = s.charAt(0);
         boolean shouldCutTree = delete(s.substring(1), node.get(currChar));
-
 
         if (shouldCutTree && node.getEntries().size() > 1 || shouldCutTree && node.equals(root)) {
             node.remove(currChar);
             return false;
         }
+
         return shouldCutTree;
     }
 }

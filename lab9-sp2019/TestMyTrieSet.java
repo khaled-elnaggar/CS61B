@@ -88,15 +88,15 @@ public class TestMyTrieSet {
             t.add(s);
         }
 
-        List<String> matchingKeys = t.keysThatMatch("s.e");
-        final List<String> expectedMatch = List.of("she", "see");
-        assertEquals(expectedMatch.size(), matchingKeys.size());
-        assertTrue(expectedMatch.containsAll(matchingKeys));
-
         List<String> matchingKeys2 = t.keysThatMatch("s..");
         final List<String> expectedMatch2 = List.of("she", "see", "sam", "sap", "sad");
         assertEquals(expectedMatch2.size(), matchingKeys2.size());
         assertTrue(expectedMatch2.containsAll(matchingKeys2));
+
+        List<String> matchingKeys = t.keysThatMatch("s.e");
+        final List<String> expectedMatch = List.of("she", "see");
+        assertEquals(expectedMatch.size(), matchingKeys.size());
+        assertTrue(expectedMatch.containsAll(matchingKeys));
 
         List<String> matchingKeys3 = t.keysThatMatch("..nx");
         final List<String> expectedMatch3 = List.of("ninx", "canx", "plnx");
@@ -105,12 +105,7 @@ public class TestMyTrieSet {
     }
 
     @Test
-    public void deleteSomeKey() {
-
-    }
-
-    @Test
-    public void deleteKey() {
+    public void deleteAllKeys() {
         MyTrieSet t = new MyTrieSet();
         String[] saStrings =
                 new String[]{"abcdefg", "ab", "abx", "aby"};
@@ -125,5 +120,25 @@ public class TestMyTrieSet {
 
         assertFalse(t.contains("abcdefg"));
         assertEquals(0, t.size());
+    }
+
+    @Test
+    public void deleteOneKeys() {
+        MyTrieSet t = new MyTrieSet();
+        final String keyToBeDeleted = "abcdefg";
+        String[] strings =
+                new String[]{keyToBeDeleted, "ab", "abx", "aby"};
+
+        for (String s : strings) {
+            t.add(s);
+        }
+
+        t.delete(keyToBeDeleted);
+
+        assertFalse(t.contains(keyToBeDeleted));
+        assertEquals(strings.length - 1, t.size());
+        assertTrue(t.contains("ab"));
+        assertTrue(t.contains("abx"));
+        assertTrue(t.contains("aby"));
     }
 }
