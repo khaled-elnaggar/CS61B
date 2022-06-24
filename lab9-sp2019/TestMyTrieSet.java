@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,24 +43,17 @@ public class TestMyTrieSet {
         String[] otherStrings = new String[]{"a", "awls", "hello"};
 
         MyTrieSet t = new MyTrieSet();
-        for (String s : saStrings) {
-            t.add(s);
-        }
+        Arrays.stream(saStrings).forEach(t::add);
         assertEquals(4, t.size());
 
-        for (String s : otherStrings) {
-            t.add(s);
-        }
+        Arrays.stream(otherStrings).forEach(t::add);
         assertEquals(7, t.size());
 
         List<String> keys = t.keysWithPrefix("sa");
         assertNotNull(keys);
-        for (String s : saStrings) {
-            assertTrue(keys.contains(s));
-        }
-        for (String s : otherStrings) {
-            assertFalse(keys.contains(s));
-        }
+
+        assertTrue(Arrays.stream(saStrings).allMatch(keys::contains));
+        assertTrue(Arrays.stream(otherStrings).noneMatch(keys::contains));
     }
 
     @Test
@@ -69,9 +63,7 @@ public class TestMyTrieSet {
                         "kito", "kiki", "kikiana"};
 
         MyTrieSet t = new MyTrieSet();
-        for (String s : saStrings) {
-            t.add(s);
-        }
+        Arrays.stream(saStrings).forEach(t::add);
         assertEquals("same", t.longestPrefixOf("same7aaaaa"));
         assertEquals("kiki", t.longestPrefixOf("kiki3abdo"));
     }
@@ -82,11 +74,8 @@ public class TestMyTrieSet {
                 new String[]{"same", "sam", "sad", "sap",
                         "she", "see",
                         "ninx", "canx", "plnx", "asdnx", "anx"};
-
         MyTrieSet t = new MyTrieSet();
-        for (String s : saStrings) {
-            t.add(s);
-        }
+        Arrays.stream(saStrings).forEach(t::add);
 
         List<String> matchingKeys2 = t.keysThatMatch("s..");
         final List<String> expectedMatch2 = List.of("she", "see", "sam", "sap", "sad");
@@ -110,13 +99,9 @@ public class TestMyTrieSet {
         String[] saStrings =
                 new String[]{"abcdefg", "ab", "abx", "aby"};
 
-        for (String s : saStrings) {
-            t.add(s);
-        }
+        Arrays.stream(saStrings).forEach(t::add);
 
-        for (String s : saStrings) {
-            t.delete(s);
-        }
+        Arrays.stream(saStrings).forEach(t::delete);
 
         assertFalse(t.contains("abcdefg"));
         assertEquals(0, t.size());
@@ -129,9 +114,7 @@ public class TestMyTrieSet {
         String[] strings =
                 new String[]{keyToBeDeleted, "ab", "abx", "aby"};
 
-        for (String s : strings) {
-            t.add(s);
-        }
+        Arrays.stream(strings).forEach(t::add);
 
         t.delete(keyToBeDeleted);
 
